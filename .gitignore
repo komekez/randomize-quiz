@@ -1,1 +1,6 @@
 .DS_store
+
+/quiz-be/node_modules
+
+
+/quiz-fe/node_modules
