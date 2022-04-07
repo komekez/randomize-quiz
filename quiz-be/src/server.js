@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const mongoConnection = require('../connections/mongoConnection');
 const apis = require('./app')
+const bodyParser = require('body-parser')
 require('dotenv').config();
 
 // Creating Mongo Connections
@@ -19,3 +20,6 @@ app.listen(port, () => {
 })
 
 app.use('/api', apis);
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));

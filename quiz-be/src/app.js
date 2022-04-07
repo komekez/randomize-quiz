@@ -7,6 +7,10 @@ const defaultApis = [
       path: '/question',
       route: apiIndex.questionApis,
     },
+    {
+      path: '/user-response',
+      route: apiIndex.userResponseApis,
+    },
   ];
 
   defaultApis.forEach((api) => {
