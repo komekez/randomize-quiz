@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 ObjectId = Schema.ObjectId
 const usersSchema = new Schema({
-    name : {type : string},
-    email : {type : email},
+    name : {type : String},
+    email : {type : String},
     // option : {type : String},
     // created_at : {type : Date},
 });
