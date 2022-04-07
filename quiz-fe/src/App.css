@@ -5,6 +5,7 @@
 .question-card {
   /* Center the div  */
   margin: 0 auto;
+  margin-bottom: 15px;
 
   /* Dimensions  */
   width: 80%; /* Can be in percentage also. */
@@ -17,6 +18,22 @@
   color: white;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
     rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+}
+
+.option-card {
+  margin: 5 auto;
+  margin-bottom: 0px;
+  margin-right: 0px;
+
+  /* width: 80%; 
+  height: auto;
+
+  background-color: gray;
+  padding: 16px;
+  border-radius: 16px;
+  color: white;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px; */
 }
 
 ul {
