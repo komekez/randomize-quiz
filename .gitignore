@@ -1,6 +1,7 @@
 .DS_store
 
 /quiz-be/node_modules
-
+/quiz-be/.env
 
 /quiz-fe/node_modules
+/quiz-fe/.env
