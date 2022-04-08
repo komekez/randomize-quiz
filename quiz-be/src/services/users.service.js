@@ -2,12 +2,18 @@ const userModel = require('../models/users.models')
 
 async function insertUser(params) {
     try { 
+        let res = {
+            inserted : false
+        }
         const insertUser = await userModel.create(params)
 
         if(insertUser._id) {
-            return true
+            res = {
+                inserted : true,
+                user_id : insertUser._id
+            }
         }
-        return false
+        return res
     } catch(error) {
         console.log(error)
     }
