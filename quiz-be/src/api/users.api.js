@@ -3,17 +3,13 @@ const apis = express.Router();
 const userService = require('../services/users.service')
 const bodyParser = require('body-parser');
 
-const app = express();
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }));
+const jsonParser = bodyParser.json();
 
-apis.post('/insert', async function (req, res, next) {
-    const data = await userService.insertUser(req.query)
+apis.post('/insert', jsonParser, async function (req, res ,next) {
+    const data = await userService.insertUser(req.body)
     res.send({
         status : 200,
-        data : {
-            inserted : data
-        },
+        data : data,
         message : "OK"
     });
 })

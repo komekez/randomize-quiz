@@ -19,7 +19,7 @@ function getRequest(endpoint, success,error){
 
 
 function postRequest (endpoint, body, success,error, extraHeader){
-    let headers;
+    let headers ;
     axios.post(API_CONFIG_URL + endpoint,body, {headers, validateStatus: () => true})
       .then(function (response) {
         success(response)
