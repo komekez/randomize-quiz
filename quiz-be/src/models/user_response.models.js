@@ -3,7 +3,10 @@ const Schema = mongoose.Schema;
 
 ObjectId = Schema.ObjectId
 const userResponseSchema = new Schema({
-    question_id : {type : ObjectId},
+    question_id : {
+        type : ObjectId,
+        required : true
+    },
     user_id : {type : ObjectId},
     option : {type : String},
     created_at : {type : Date},

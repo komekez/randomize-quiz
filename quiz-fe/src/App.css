@@ -21,9 +21,11 @@
 }
 
 .option-card {
-  margin: 5 auto;
+  /* margin: 5 auto;
   margin-bottom: 0px;
-  margin-right: 0px;
+  margin-right: 0px; */
+  display: inline-block;
+
 
   /* width: 80%; 
   height: auto;
@@ -42,16 +44,18 @@ ul {
 
 li {
   margin-top: 8px;
-  background-color: darkgray;
   padding: 16px;
-  border: 3px solid white;
   border-radius: 20px;
-  font-size: 20px;
+  display: inline-flex;
+  font:icon;
+  color : black;
+  font-weight: 500;
 }
 
 .question-text {
-  color: darkblue;
+  color: black;
   font-size: 24px;
+  font-weight: 500;
 }
 
 /* Final Results  */
@@ -75,7 +79,7 @@ li {
 }
 
 button {
-  background-color: red; /* Green */
+  background-color: black;
   border: none;
   color: white;
   padding: 16px 24px;
@@ -84,11 +88,13 @@ button {
   display: inline-block;
   font-size: 16px;
   font-weight: bold;
-
-  border-radius: 24px;
+  border-radius:10px;
 } 
 
-
+label {
+  margin-bottom: 3px;
+  margin-right: 20px;
+}
 
 /* Popup style */
 .popup-box {

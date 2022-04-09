@@ -37,6 +37,7 @@ const showSuccessToast  = (msg) => {
 }
   
 const showErrorToast = (msg) => {
+    console.log(toast.error(msg))
     toast.error(msg)
 }
   
