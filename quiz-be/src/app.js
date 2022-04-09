@@ -15,6 +15,10 @@ const defaultApis = [
       path: '/users',
       route: apiIndex.usersApis,
     },
+    {
+      path: '/analytics',
+      route: apiIndex.analyticsApis,
+    },
   ];
 
   defaultApis.forEach((api) => {
