@@ -5,7 +5,6 @@ ObjectId = Schema.ObjectId
 const usersSchema = new Schema({
     name : {type : String},
     email : {type : String},
-    // option : {type : String},
     // created_at : {type : Date},
 });
 
