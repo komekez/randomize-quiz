@@ -2,6 +2,7 @@ const _ = require('lodash')
 const userResponseModel = require('../models/user_response.models')
 const userModel = require('../models/users.models')
 const questionModel = require('../models/questions.models')
+const analyticsModel = require('../models/analytics.model')
 const CsvParser = require("json2csv").Parser;
 
 async function userResponseCSV() {
@@ -43,6 +44,47 @@ async function userResponseCSV() {
 }
 
 
+async function insertUserAnalytics(params) {
+    try { 
+        const paramsBody = params.body
+        const analyticsData = {
+            'start_time' : new Date(paramsBody['analytics']['start_time']),
+            'user_agent' : params.rawHeaders[15],
+            'user_device' : params.rawHeaders[17],
+            'referrer' : params.rawHeaders[27]
+        }
+        const insertUserAna = await analyticsModel.create(analyticsData)
+        if(insertUserAna._id) {
+            return insertUserAna._id
+        } 
+        return 0
+    } catch(error) {
+        //Can Perform Logging here
+        return 0
+    }
+}
+
+
+async function updateUserAnalytics(params) {
+    try { 
+
+        const updateUserAna = await analyticsModel.updateOne({_id : params.analytics_id }, {
+            'user_id' : params['analytics']['user_id'],
+            'end_time' : new Date(params['analytics']['end_time']),
+        })
+        if(updateUserAna) {
+            return true
+        } 
+        return false
+    } catch(error) {
+        //Can Perform Logging here
+        return false
+    }
+}
+
+
 module.exports = {
     userResponseCSV,
+    insertUserAnalytics,
+    updateUserAnalytics
 }

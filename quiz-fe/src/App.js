@@ -16,6 +16,7 @@ function App() {
   const [initialResponse, setInitialResponse] = useState({})
   const [questionNumber, setQuestionNumber] = useState([])
   const [csvData, setCsvData] = useState([])
+  const [analyticsId, setAnalyticsId] = useState(0)
 
   const togglePopup = () => {
     setpopOpen(!popOpen);
@@ -58,14 +59,31 @@ function storeUserData() {
     }) 
   }
 
-  // const getTransactionData = async () => {
-  //   // 'api' just wraps axios with some setting specific to our app. the important thing here is that we use .then to capture the table response data, update the state, and then once we exit that operation we're going to click on the csv download link using the ref
-  //   await api.post('/api/get_transactions_table', { game_id: gameId })
-  //     .then((r) => setTransactionData(r.data))
-  //     .catch((e) => console.log(e))
-  //   csvLink.current.link.click()
-  // }
+  function storeUserAnalytics() {
+    postRequest('api/analytics/insert', {
+      "analytics" : {
+        start_time : Date().toLocaleString()
+      }
+    }, (response) => {
+      if(response.data?.data?.inserted) {
+        setAnalyticsId(response.data?.data?.analytic_id)
+      }
+    }) 
+  }
 
+  function updateUserAnalytics(userId) {
+    postRequest('api/analytics/update', {
+      "analytics" : {
+        'user_id' : userId,
+        'end_time' : Date().toLocaleString()
+      },
+      "analytics_id" : analyticsId
+    }, (response) => {
+      if(response.data?.data?.inserted) {
+        console.log("Success")
+      }
+    })
+  }
 
   function downloadCSV() {
     getRequest('api/analytics/user-response/csv', (response) => {
@@ -96,13 +114,13 @@ function storeUserData() {
               <label className='question-text' name={d.question_id} value={d.question_id} onChange={(t)=>questionNumber.append([d.question_id])}>{d.question}</label> <br></br>
               <div>
                 <li>
-                <label> <input type="radio"  name={d.question_id} value={d.option1} key={d.option1} onChange={(t) => initialResponse[d.question_id] = d.option1}/> {d.option1} </label> <br></br>
-                <label> <input type="radio"  name={d.question_id} value={d.option2} key={d.option2} onChange={(t) => initialResponse[d.question_id] = d.option2}/> {d.option2} </label> <br></br>
-                <label> <input type="radio"  name={d.question_id} value={d.option3} key={d.option3} onChange={(t) => initialResponse[d.question_id] = d.option3}/> {d.option3} </label> <br></br>
-                <label> <input type="radio"  name={d.question_id} value={d.option4} key={d.option4} onChange={(t) => initialResponse[d.question_id] = d.option4}/> {d.option4} </label> <br></br>
-                <label> <input type="radio"  name={d.question_id} value={d.option5} key={d.option5} onChange={(t) => initialResponse[d.question_id] = d.option5}/> {d.option5} </label> <br></br>
-                <label> <input type="radio"  name={d.question_id} value={d.option6} key={d.option6} onChange={(t) => initialResponse[d.question_id] = d.option6}/> {d.option6} </label> <br></br>
-                <label> <input type="radio"  name={d.question_id} value={d.option7} key={d.option7} onChange={(t) => initialResponse[d.question_id] = d.option7}/> {d.option7} </label> <br></br>
+                <label> <input type="radio"  name={d.question_id} value={d.option1} key={d.option1} onChange={(t) => initialResponse[d.question_id] = d.option1} onClick={storeUserAnalytics}/> {d.option1} </label> <br></br>
+                <label> <input type="radio"  name={d.question_id} value={d.option2} key={d.option2} onChange={(t) => initialResponse[d.question_id] = d.option2} onClick={storeUserAnalytics}/> {d.option2} </label> <br></br>
+                <label> <input type="radio"  name={d.question_id} value={d.option3} key={d.option3} onChange={(t) => initialResponse[d.question_id] = d.option3} onClick={storeUserAnalytics}/> {d.option3} </label> <br></br>
+                <label> <input type="radio"  name={d.question_id} value={d.option4} key={d.option4} onChange={(t) => initialResponse[d.question_id] = d.option4} onClick={storeUserAnalytics}/> {d.option4} </label> <br></br>
+                <label> <input type="radio"  name={d.question_id} value={d.option5} key={d.option5} onChange={(t) => initialResponse[d.question_id] = d.option5} onClick={storeUserAnalytics}/> {d.option5} </label> <br></br>
+                <label> <input type="radio"  name={d.question_id} value={d.option6} key={d.option6} onChange={(t) => initialResponse[d.question_id] = d.option6} onClick={storeUserAnalytics}/> {d.option6} </label> <br></br>
+                <label> <input type="radio"  name={d.question_id} value={d.option7} key={d.option7} onChange={(t) => initialResponse[d.question_id] = d.option7} onClick={storeUserAnalytics}/> {d.option7} </label> <br></br>
                 </li>
               </div>
             </label>
@@ -114,14 +132,8 @@ function storeUserData() {
           Submit
         </button>
 
-        {/* <div className='csv-button'>
-          <button onClick={downloadCSV}>
-            Download Analytics
-          </button>
-        </div> */}
 
-      <div>
-        <button onClick={downloadCSV}>Download Responses</button>
+        <button class = 'csv-button' onClick={downloadCSV}>Download Responses</button>
         <CSVLink
           data={csvData}
           filename='analytics.csv'
@@ -129,7 +141,6 @@ function storeUserData() {
           ref={csvLink}
           target='_blank'
         />
-      </div>
 
           {popOpen && <Popup
           content={<>
@@ -144,6 +155,7 @@ function storeUserData() {
               try {
                 let userId = await storeUserData(); 
                 storeUserResponseData(userId)
+                updateUserAnalytics(userId)
               } catch(e) {
                 alert(e)
               }
